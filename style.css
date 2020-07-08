@@ -1,3 +1,25 @@
 #score{
     color: blueviolet;
 }
+#time{
+    margin-right: 10px;
+    float: right;
+}
+#quizintro{
+    margin: auto;
+  text-align: center;
+  
+}
+#quiz{
+    margin: auto;
+  text-align: center;
+  
+}
+#start{
+    background-color: blueviolet;
+    color: white;
+}
+
+#quiz li button{
+    background-color: blueviolet ;
+}
