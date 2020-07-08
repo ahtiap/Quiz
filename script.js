@@ -48,8 +48,23 @@ var myQuestions = [
 function createQuiz(event) {
   event.stopPropagation();
   quizIntro.style.display = "none";
-  var curQ = myQuestions[index].question;
+    var curQ = myQuestions[index].question;
+    var curAs=myQuestions[index].answers;
     quiz.textContent = curQ;
+    var ul = document.createElement("ul");
+    quiz.appendChild(ul);
+    for (var key in myQuestions[index].answers) {
+        if (curAs.hasOwnProperty(key)) {
+            var element = curAs[key];
+            var li = document.createElement("li");
+            ul.appendChild(li);
+            var button = document.createElement("button");
+            button.textContent = element;
+            li.appendChild(button);
+            
+            
+        }
+    }
   quiz.style.display = "block";
 
   setTime();

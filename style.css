@@ -12,7 +12,7 @@
 }
 #quiz{
     margin: auto;
-  text-align: center;
+  
   
 }
 #start{
@@ -20,6 +20,11 @@
     color: white;
 }
 
-#quiz li button{
+#quiz ul li button{
     background-color: blueviolet ;
+}
+#quiz ul {
+    margin-top: 10px;
+    padding: 0px;
+    list-style: none;
 }
