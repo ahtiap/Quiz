@@ -3,7 +3,7 @@ var quiz = document.querySelector("#quiz");
 var quizIntro = document.querySelector("#quizintro");
 var start = document.querySelector("#start");
 var timeEl = document.querySelector("#time");
-
+var ul = document.createElement("ul");
 //user initial
 var initials = " ";
 //score
@@ -43,30 +43,30 @@ var myQuestions = [
     correctAnswer: "d",
   },
 ];
-
+//function to show each question after answer
+function showQ() {
+  quizIntro.style.display = "none";
+  var curQ = myQuestions[index].question;
+  var curAs = myQuestions[index].answers;
+  quiz.textContent = curQ;
+  quiz.appendChild(ul);
+  for (var key in myQuestions[index].answers) {
+    if (curAs.hasOwnProperty(key)) {
+      var element = curAs[key];
+        var li = document.createElement("li");
+        li.setAttribute("id",index)
+      ul.appendChild(li);
+      var button = document.createElement("button");
+      button.textContent = element;
+      li.appendChild(button);
+    }
+  }
+  quiz.style.display = "block";
+}
 //function to make the quiz
 function createQuiz(event) {
-  event.stopPropagation();
-  quizIntro.style.display = "none";
-    var curQ = myQuestions[index].question;
-    var curAs=myQuestions[index].answers;
-    quiz.textContent = curQ;
-    var ul = document.createElement("ul");
-    quiz.appendChild(ul);
-    for (var key in myQuestions[index].answers) {
-        if (curAs.hasOwnProperty(key)) {
-            var element = curAs[key];
-            var li = document.createElement("li");
-            ul.appendChild(li);
-            var button = document.createElement("button");
-            button.textContent = element;
-            li.appendChild(button);
-            
-            
-        }
-    }
-  quiz.style.display = "block";
-
+  event.stopPropagation;
+  showQ();
   setTime();
 }
 
@@ -82,3 +82,17 @@ function setTime() {
 }
 
 start.addEventListener("click", createQuiz);
+ul.addEventListener("click", function (event) {
+  event.preventDefault();
+  if (event.target.matches("button")) {
+      if (index < 2) {
+        while (ul.firstChild) {
+            ul.removeChild(ul.lastChild);
+          }
+          
+       index++;
+      showQ(); 
+    }
+      
+  }
+});
