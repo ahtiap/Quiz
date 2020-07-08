@@ -4,6 +4,7 @@ var quizIntro = document.querySelector("#quizintro");
 var start = document.querySelector("#start");
 var timeEl = document.querySelector("#time");
 var answerEl = document.querySelector("#answer");
+var formEl = document.querySelector("#scoreForm");
 var ul = document.createElement("ul");
 
 //user initial
@@ -101,25 +102,35 @@ ul.addEventListener("click", function (event) {
   e = event.target;
   if (e.matches("button")) {
     // if to check if any question is remaing
-    if (index <= 2) {
+    if (index <3) {
       //loop to remove last question
       while (ul.firstChild) {
         ul.removeChild(ul.lastChild);
       }
 
       //increase index and the new question
-      index++;
-      checkA(e.textContent);
-      showQ();
-    }
+        checkA(e.textContent);
+        index++;
+      
+        showQ();
+        console.log(index)
+        if (index == 3) {
+            answerEl.style.display = "none";
+            formEl.style.display = "block";
+            quiz.style.display = "none";
+            
+        }
+    } 
   }
 });
 
 //function to check answer
 function checkA(a) {
+  //if answer is correct show the prompt
   if (a == goodA) {
     answerEl.style.display = "block";
     answerEl.textContent = "Correct!";
+    //if answer is wrong show prompt and take 10 sec off the timer
   } else {
     answerEl.style.display = "block";
     answerEl.textContent = "wrong!";

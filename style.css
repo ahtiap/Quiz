@@ -1,3 +1,6 @@
+main{
+    margin-top: 65px;
+}
 #score{
     color: blueviolet;
 }
@@ -12,7 +15,7 @@
 }
 #quiz{
     margin: auto;
-  
+    margin-top: 50px;
   
 }
 #start{
@@ -32,4 +35,11 @@
     display: none;
     border-top: lightgray solid;
     color: lightgray;
+}
+#scoreForm{
+    display: none;
+    text-align: center;
+    margin: auto;
+    margin-top: 50px;
+
 }
