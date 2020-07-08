@@ -28,3 +28,8 @@
     padding: 0px;
     list-style: none;
 }
+#answer{
+    display: none;
+    border-top: lightgray solid;
+    color: lightgray;
+}

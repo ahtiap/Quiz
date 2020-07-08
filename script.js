@@ -3,7 +3,9 @@ var quiz = document.querySelector("#quiz");
 var quizIntro = document.querySelector("#quizintro");
 var start = document.querySelector("#start");
 var timeEl = document.querySelector("#time");
+var answerEl = document.querySelector("#answer");
 var ul = document.createElement("ul");
+
 //user initial
 var initials = " ";
 //score
@@ -21,7 +23,7 @@ var myQuestions = [
       b: "Sheryl Sandberg",
       c: "Brendan Eich",
     },
-    correctAnswer: "c",
+    correctAnswer: "Brendan Eich",
   },
   {
     question: "Which one of these is a JavaScript package manager?",
@@ -30,7 +32,7 @@ var myQuestions = [
       b: "TypeScript",
       c: "npm",
     },
-    correctAnswer: "c",
+    correctAnswer: "npm",
   },
   {
     question: "Which tool can you use to ensure code quality?",
@@ -40,32 +42,44 @@ var myQuestions = [
       c: "RequireJS",
       d: "ESLint",
     },
-    correctAnswer: "d",
+    correctAnswer: "ESLint",
   },
 ];
+var goodA;
 //function to show each question after answer
 function showQ() {
-  quizIntro.style.display = "none";
-  var curQ = myQuestions[index].question;
-  var curAs = myQuestions[index].answers;
-  quiz.textContent = curQ;
-  quiz.appendChild(ul);
-  for (var key in myQuestions[index].answers) {
-    if (curAs.hasOwnProperty(key)) {
-      var element = curAs[key];
+  if (index > 2) {
+    return;
+  } else {
+    quizIntro.style.display = "none";
+    // get question at the current index
+    var curQ = myQuestions[index].question;
+    // get answer at current index
+    var curAs = myQuestions[index].answers;
+    quiz.textContent = curQ;
+    quiz.appendChild(ul);
+    // loop to create new list items with answers and add them to the ul
+    for (var key in myQuestions[index].answers) {
+      if (curAs.hasOwnProperty(key)) {
+        var element = curAs[key];
         var li = document.createElement("li");
-        li.setAttribute("id",index)
-      ul.appendChild(li);
-      var button = document.createElement("button");
-      button.textContent = element;
-      li.appendChild(button);
+        li.setAttribute("id", index);
+        ul.appendChild(li);
+        var button = document.createElement("button");
+        button.textContent = element;
+        li.appendChild(button);
+      }
     }
+    //get the correct answer for verification
+    goodA = myQuestions[index].correctAnswer;
+    //console.log(goodA);
+    quiz.style.display = "block";
   }
-  quiz.style.display = "block";
 }
 //function to make the quiz
 function createQuiz(event) {
-  event.stopPropagation;
+  event.stopPropagation();
+  event.preventDefault();
   showQ();
   setTime();
 }
@@ -84,15 +98,31 @@ function setTime() {
 start.addEventListener("click", createQuiz);
 ul.addEventListener("click", function (event) {
   event.preventDefault();
-  if (event.target.matches("button")) {
-      if (index < 2) {
-        while (ul.firstChild) {
-            ul.removeChild(ul.lastChild);
-          }
-          
-       index++;
-      showQ(); 
+  e = event.target;
+  if (e.matches("button")) {
+    // if to check if any question is remaing
+    if (index <= 2) {
+      //loop to remove last question
+      while (ul.firstChild) {
+        ul.removeChild(ul.lastChild);
+      }
+
+      //increase index and the new question
+      index++;
+      checkA(e.textContent);
+      showQ();
     }
-      
   }
 });
+
+//function to check answer
+function checkA(a) {
+  if (a == goodA) {
+    answerEl.style.display = "block";
+    answerEl.textContent = "Correct!";
+  } else {
+    answerEl.style.display = "block";
+    answerEl.textContent = "wrong!";
+    timer = timer - 10;
+  }
+}
