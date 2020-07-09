@@ -9,8 +9,12 @@ var finalScore = document.querySelector("#score");
 var head = document.querySelector("#head");
 var submit = document.querySelector("#initSubmit");
 var initialsEl = document.querySelector("#initials");
+var lastDisplay = document.querySelector("#lastdisplay");
+var lastInit = document.querySelector("#lastinit");
+var lastScore= document.querySelector("#lastscore");
 var ul = document.createElement("ul");
 
+var timerInterval;
 //user initial
 var initials = localStorage.getItem("initials");
 //score
@@ -107,15 +111,15 @@ function finalScoreF() {
   answerEl.style.display = "none";
   formEl.style.display = "block";
   quiz.style.display = "none";
-  score = timer;
+  score = timer+1;
   localStorage.setItem("score", score);
   finalScore.textContent = score;
-  clearInterval(setTime);
+    
 }
 
 //countdown function
 function setTime() {
-  var timerInterval = setInterval(function () {
+  timerInterval = setInterval(function () {
     timeEl.textContent = "Time: " + timer;
     timer--;
     if (timer === 0) {
@@ -144,9 +148,24 @@ ul.addEventListener("click", function (event) {
 
       showQ();
       //console.log(index);
-      if (index == 3) {
-        finalScoreF();
+        if (index == 3) {
+            clearInterval(timerInterval);
+          finalScoreF();
+          
       }
     }
   }
+});
+submit.addEventListener("click", function highScore(e) {
+    e.preventDefault();
+    initials= initialsEl.value.trim();
+    //console.log(init);
+    localStorage.setItem("initials", initials);
+    formEl.style.display = "none";
+    lastDisplay.style.display = "block";
+    head.style.display = "none";
+    lastInit.textContent = initials;
+    lastScore.textContent = score;
+
+    
 });
