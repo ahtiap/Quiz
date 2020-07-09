@@ -15,6 +15,11 @@ var lastScore = document.querySelector("#lastscore");
 var retry = document.querySelector("#retry");
 var ul = document.createElement("ul");
 
+//sound effects
+var wrong = new Audio("wrong.mp3");
+var correct = new Audio("correct.mp3");
+
+//countedown timer interval
 var timerInterval;
 //user initial
 var initials = localStorage.getItem("initials");
@@ -125,13 +130,15 @@ function createQuiz(event) {
 //function to check answer
 function checkA(a) {
   //if answer is correct show the prompt
-  if (a == goodA) {
+    if (a == goodA) {
+        correct.play();
     answerEl.style.display = "block";
     answerEl.textContent = "Correct!";
     //fadeout answer promt
     setTimeout(fade_out, 1000);
     //if answer is wrong show prompt and take 10 sec off the timer
   } else {
+      wrong.play();
     answerEl.style.display = "block";
     answerEl.textContent = "wrong!";
     timer = timer - 10;
@@ -156,7 +163,8 @@ function setTime() {
     timeEl.textContent = "Time: " + timer;
     timer--;
     if (timer === 0) {
-      clearInterval(timerInterval);
+        clearInterval(timerInterval);
+        
     }
   }, 1000);
 }
