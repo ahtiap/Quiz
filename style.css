@@ -51,9 +51,8 @@ button{
 #lastdisplay p{
     background-color: lightpink;
 }
-p #lastscore{
-float: right;
+#lastdisplay p{
+    padding-left: 10px;
 }
-#lastdisplay h2{
-    text-align: center;
-}
+
+

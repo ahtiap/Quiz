@@ -204,7 +204,7 @@ submit.addEventListener("click", function highScore(e) {
   formEl.style.display = "none";
   lastDisplay.style.display = "block";
   head.style.display = "none";
-  lastInit.textContent = initials;
+  lastInit.textContent = "1. "+initials+" ";
   lastScore.textContent = score;
 });
 //function to retry game
