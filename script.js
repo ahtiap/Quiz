@@ -164,7 +164,8 @@ function setTime() {
     timer--;
     if (timer === 0) {
         clearInterval(timerInterval);
-        
+        timer -= 1;
+        finalScoreF();
     }
   }, 1000);
 }
