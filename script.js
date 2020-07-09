@@ -13,6 +13,7 @@ var lastDisplay = document.querySelector("#lastdisplay");
 var lastInit = document.querySelector("#lastinit");
 var lastScore = document.querySelector("#lastscore");
 var retry = document.querySelector("#retry");
+var viewScore = document.querySelector("#highscore");
 var ul = document.createElement("ul");
 
 //sound effects
@@ -195,6 +196,12 @@ ul.addEventListener("click", function (event) {
     }
   }
 });
+//function to fadeoout answer element
+var fade_out = function () {
+    var a = $("#answer");
+    a.fadeOut().empty();
+};
+  //All events handling
 submit.addEventListener("click", function highScore(e) {
   e.preventDefault();
   initials = initialsEl.value.trim();
@@ -217,8 +224,20 @@ retry.addEventListener("click", function retry(e) {
   head.style.display = "block";
   quizIntro.style.display = "block";
 });
-//function to fadeoout answer element
-var fade_out = function () {
-  var a = $("#answer");
-  a.fadeOut().empty();
-};
+/*when clicking on view highscore
+viewScore.addEventListener("click", function highScore(e) {
+    e.preventDefault();
+    initials = initialsEl.value.trim();
+    //console.log(init);
+    //store initials
+    localStorage.setItem("initials", initials);
+    formEl.style.display = "none";
+    lastDisplay.style.display = "block";
+    quiz.style.display = "none";
+    quizIntro.style.display = "none";
+    head.style.display = "none";
+    lastInit.textContent = "1. "+initials+" ";
+    lastScore.textContent = score;
+
+});
+*/
