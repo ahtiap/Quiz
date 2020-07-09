@@ -46,6 +46,7 @@ button{
 #lastdisplay{
     display: none;
     margin: auto;
+    max-width: 75%;
 }
 #lastdisplay p{
     background-color: lightpink;

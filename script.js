@@ -11,7 +11,8 @@ var submit = document.querySelector("#initSubmit");
 var initialsEl = document.querySelector("#initials");
 var lastDisplay = document.querySelector("#lastdisplay");
 var lastInit = document.querySelector("#lastinit");
-var lastScore= document.querySelector("#lastscore");
+var lastScore = document.querySelector("#lastscore");
+var retry = document.querySelector("#retry");
 var ul = document.createElement("ul");
 
 var timerInterval;
@@ -42,7 +43,34 @@ var myQuestions = [
       c: "npm",
     },
     correctAnswer: "npm",
-  },
+    },
+    {
+        question: "Inside which HTML element do we put the JavaScript?",
+        answers: {
+          a: "<script>",
+          b: "<js>",
+          c: "<javascript>",
+          d: "<scripting>",
+        },
+        correctAnswer: "<script>",
+    },
+    {
+        question: 'What is the correct syntax for referring to an external script called "xxx.js"?',
+        answers: {
+          a:  '<script name="xxx.js">',
+          b: '<script href="xxx.js">',
+          c: '<script src="xxx.js">',
+        },
+        correctAnswer: '<script name="xxx.js">',
+    },
+    {
+        question: "The external JavaScript file must contain the <script> tag.",
+        answers: {
+          a:  "False",
+          b: "True",
+        },
+        correctAnswer: "False",
+      },
   {
     question: "Which tool can you use to ensure code quality?",
     answers: {
@@ -57,7 +85,7 @@ var myQuestions = [
 var goodA;
 //function to show each question after answer
 function showQ() {
-  if (index > 2) {
+  if (index > 5) {
     return;
   } else {
     quizIntro.style.display = "none";
@@ -98,12 +126,14 @@ function checkA(a) {
   //if answer is correct show the prompt
   if (a == goodA) {
     answerEl.style.display = "block";
-    answerEl.textContent = "Correct!";
+      answerEl.textContent = "Correct!";
+      setTimeout(fade_out, 1000);
     //if answer is wrong show prompt and take 10 sec off the timer
   } else {
     answerEl.style.display = "block";
     answerEl.textContent = "wrong!";
-    timer = timer - 10;
+      timer = timer - 10;
+      setTimeout(fade_out, 1000);
   }
 }
 //function to get user initials and display final score
@@ -111,7 +141,8 @@ function finalScoreF() {
   answerEl.style.display = "none";
   formEl.style.display = "block";
   quiz.style.display = "none";
-  score = timer+1;
+    score = timer + 1;
+    //store score
   localStorage.setItem("score", score);
   finalScore.textContent = score;
     
@@ -136,7 +167,7 @@ ul.addEventListener("click", function (event) {
   e = event.target;
   if (e.matches("button")) {
     // if to check if any question is remaing
-    if (index < 3) {
+    if (index < 6) {
       //loop to remove last question
       while (ul.firstChild) {
         ul.removeChild(ul.lastChild);
@@ -148,7 +179,7 @@ ul.addEventListener("click", function (event) {
 
       showQ();
       //console.log(index);
-        if (index == 3) {
+        if (index == 6) {
             clearInterval(timerInterval);
           finalScoreF();
           
@@ -160,6 +191,7 @@ submit.addEventListener("click", function highScore(e) {
     e.preventDefault();
     initials= initialsEl.value.trim();
     //console.log(init);
+    //store initials
     localStorage.setItem("initials", initials);
     formEl.style.display = "none";
     lastDisplay.style.display = "block";
@@ -169,3 +201,16 @@ submit.addEventListener("click", function highScore(e) {
 
     
 });
+//function to retry game
+retry.addEventListener("click", function retry(e) {
+    e.preventDefault();
+    lastDisplay.style.display = "none";
+    head.style.display = "block";
+    quizIntro.style.display = "block";
+});
+
+var fade_out = function() {
+    $("#answer").fadeOut().empty();
+  }
+  
+  
