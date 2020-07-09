@@ -5,12 +5,16 @@ var start = document.querySelector("#start");
 var timeEl = document.querySelector("#time");
 var answerEl = document.querySelector("#answer");
 var formEl = document.querySelector("#scoreForm");
+var finalScore = document.querySelector("#score");
+var head = document.querySelector("#head");
+var submit = document.querySelector("#initSubmit");
+var initialsEl = document.querySelector("#initials");
 var ul = document.createElement("ul");
 
 //user initial
-var initials = " ";
+var initials = localStorage.getItem("initials");
 //score
-var score = 0;
+var score = localStorage.getItem("score");
 // timer initial value
 var timer = 75;
 //index for questions
@@ -85,45 +89,6 @@ function createQuiz(event) {
   setTime();
 }
 
-//countdown function
-function setTime() {
-  var timerInterval = setInterval(function () {
-    timeEl.textContent = "Time: " + timer;
-    timer--;
-    if (timer === 0) {
-      clearInterval(timerInterval);
-    }
-  }, 1000);
-}
-
-start.addEventListener("click", createQuiz);
-ul.addEventListener("click", function (event) {
-  event.preventDefault();
-  e = event.target;
-  if (e.matches("button")) {
-    // if to check if any question is remaing
-    if (index <3) {
-      //loop to remove last question
-      while (ul.firstChild) {
-        ul.removeChild(ul.lastChild);
-      }
-
-      //increase index and the new question
-        checkA(e.textContent);
-        index++;
-      
-        showQ();
-        console.log(index)
-        if (index == 3) {
-            answerEl.style.display = "none";
-            formEl.style.display = "block";
-            quiz.style.display = "none";
-            
-        }
-    } 
-  }
-});
-
 //function to check answer
 function checkA(a) {
   //if answer is correct show the prompt
@@ -137,3 +102,51 @@ function checkA(a) {
     timer = timer - 10;
   }
 }
+//function to get user initials and display final score
+function finalScoreF() {
+  answerEl.style.display = "none";
+  formEl.style.display = "block";
+  quiz.style.display = "none";
+  score = timer;
+  localStorage.setItem("score", score);
+  finalScore.textContent = score;
+  clearInterval(setTime);
+}
+
+//countdown function
+function setTime() {
+  var timerInterval = setInterval(function () {
+    timeEl.textContent = "Time: " + timer;
+    timer--;
+    if (timer === 0) {
+      clearInterval(timerInterval);
+    }
+  }, 1000);
+}
+
+
+
+start.addEventListener("click", createQuiz);
+ul.addEventListener("click", function (event) {
+  event.preventDefault();
+  e = event.target;
+  if (e.matches("button")) {
+    // if to check if any question is remaing
+    if (index < 3) {
+      //loop to remove last question
+      while (ul.firstChild) {
+        ul.removeChild(ul.lastChild);
+      }
+
+      //increase index and the new question
+      checkA(e.textContent);
+      index++;
+
+      showQ();
+      //console.log(index);
+      if (index == 3) {
+        finalScoreF();
+      }
+    }
+  }
+});

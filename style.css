@@ -1,7 +1,7 @@
 main{
     margin-top: 65px;
 }
-#score{
+#highscore{
     color: blueviolet;
 }
 #time{
@@ -23,7 +23,7 @@ main{
     color: white;
 }
 
-#quiz ul li button{
+button{
     background-color: blueviolet ;
 }
 #quiz ul {
