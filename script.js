@@ -43,34 +43,35 @@ var myQuestions = [
       c: "npm",
     },
     correctAnswer: "npm",
+  },
+  {
+    question: "Inside which HTML element do we put the JavaScript?",
+    answers: {
+      a: "<script>",
+      b: "<js>",
+      c: "<javascript>",
+      d: "<scripting>",
     },
-    {
-        question: "Inside which HTML element do we put the JavaScript?",
-        answers: {
-          a: "<script>",
-          b: "<js>",
-          c: "<javascript>",
-          d: "<scripting>",
-        },
-        correctAnswer: "<script>",
+    correctAnswer: "<script>",
+  },
+  {
+    question:
+      'What is the correct syntax for referring to an external script called "xxx.js"?',
+    answers: {
+      a: '<script name="xxx.js">',
+      b: '<script href="xxx.js">',
+      c: '<script src="xxx.js">',
     },
-    {
-        question: 'What is the correct syntax for referring to an external script called "xxx.js"?',
-        answers: {
-          a:  '<script name="xxx.js">',
-          b: '<script href="xxx.js">',
-          c: '<script src="xxx.js">',
-        },
-        correctAnswer: '<script name="xxx.js">',
+    correctAnswer: '<script name="xxx.js">',
+  },
+  {
+    question: "The external JavaScript file must contain the <script> tag.",
+    answers: {
+      a: "False",
+      b: "True",
     },
-    {
-        question: "The external JavaScript file must contain the <script> tag.",
-        answers: {
-          a:  "False",
-          b: "True",
-        },
-        correctAnswer: "False",
-      },
+    correctAnswer: "False",
+  },
   {
     question: "Which tool can you use to ensure code quality?",
     answers: {
@@ -126,14 +127,16 @@ function checkA(a) {
   //if answer is correct show the prompt
   if (a == goodA) {
     answerEl.style.display = "block";
-      answerEl.textContent = "Correct!";
-      setTimeout(fade_out, 1000);
+    answerEl.textContent = "Correct!";
+    //fadeout answer promt
+    setTimeout(fade_out, 1000);
     //if answer is wrong show prompt and take 10 sec off the timer
   } else {
     answerEl.style.display = "block";
     answerEl.textContent = "wrong!";
-      timer = timer - 10;
-      setTimeout(fade_out, 1000);
+    timer = timer - 10;
+    //fadeout answer promt
+    setTimeout(fade_out, 1000);
   }
 }
 //function to get user initials and display final score
@@ -141,11 +144,10 @@ function finalScoreF() {
   answerEl.style.display = "none";
   formEl.style.display = "block";
   quiz.style.display = "none";
-    score = timer + 1;
-    //store score
+  score = timer + 1;
+  //store score
   localStorage.setItem("score", score);
   finalScore.textContent = score;
-    
 }
 
 //countdown function
@@ -158,8 +160,6 @@ function setTime() {
     }
   }, 1000);
 }
-
-
 
 start.addEventListener("click", createQuiz);
 ul.addEventListener("click", function (event) {
@@ -179,38 +179,37 @@ ul.addEventListener("click", function (event) {
 
       showQ();
       //console.log(index);
-        if (index == 6) {
-            clearInterval(timerInterval);
-          finalScoreF();
-          
+      if (index == 6) {
+        clearInterval(timerInterval);
+        finalScoreF();
       }
     }
   }
 });
 submit.addEventListener("click", function highScore(e) {
-    e.preventDefault();
-    initials= initialsEl.value.trim();
-    //console.log(init);
-    //store initials
-    localStorage.setItem("initials", initials);
-    formEl.style.display = "none";
-    lastDisplay.style.display = "block";
-    head.style.display = "none";
-    lastInit.textContent = initials;
-    lastScore.textContent = score;
-
-    
+  e.preventDefault();
+  initials = initialsEl.value.trim();
+  //console.log(init);
+  //store initials
+  localStorage.setItem("initials", initials);
+  formEl.style.display = "none";
+  lastDisplay.style.display = "block";
+  head.style.display = "none";
+  lastInit.textContent = initials;
+  lastScore.textContent = score;
 });
 //function to retry game
 retry.addEventListener("click", function retry(e) {
-    e.preventDefault();
-    lastDisplay.style.display = "none";
-    head.style.display = "block";
-    quizIntro.style.display = "block";
+  e.preventDefault();
+  timeEl.textContent = "Time: " + 0;
+  index = 0;
+  timer = 75;
+  lastDisplay.style.display = "none";
+  head.style.display = "block";
+  quizIntro.style.display = "block";
 });
-
-var fade_out = function() {
-    $("#answer").fadeOut().empty();
-  }
-  
-  
+//function to fadeoout answer element
+var fade_out = function () {
+  var a = $("#answer");
+  a.fadeOut().empty();
+};
