@@ -4,6 +4,9 @@
  
 * It uses Javascript to synamicly switch between question and displays
   ,track scores and users initials.
+  * The app will play a sound indicating if answer was right or wrong
+  * All history of the score is stored in local Storage and can be 
+    accessed by clicking on 'View Highscore'
 
 * The application uses bootstrap grid system to be resonsive to the 
   different devices sizes.

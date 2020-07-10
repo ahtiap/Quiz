@@ -14,8 +14,11 @@
     />
   </head>
   <body>
+    <span id="goback"style="display:none">Home Page</span>
     <div id="head">
-      <span id="highscore">View Highscores</span><span id="time">Time: 0</span>
+      <span id="highscore">View Highscores</span>
+      <span id="time">Time: 0</span>
+      
     </div>
     <main class="container-sm">
       <div id="quiz" class="col-sm-8" style="display: none;"></div>
@@ -40,7 +43,9 @@
       <div class-="col-sm-4" id="lastdisplay">
         <h2>Highscores</h2>
         <p><span id="lastinit"></span> <span id="lastscore"></span></p>
-        <div style="text-align: center;width: 75%;"><button id="retry">Retry</button></div>
+        <div style="text-align: center; width: 75%;">
+          <button id="retry">Retry</button>
+        </div>
       </div>
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
