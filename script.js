@@ -24,14 +24,10 @@ var correct = new Audio("correct.mp3");
 //countedown timer interval
 var timerInterval;
 //place to store all highscores history in the locsal storage
-var allHighscores = JSON.parse(localStorage.getItem("scoreHistory"))||[];
+var allHighscores = JSON.parse(localStorage.getItem("scoreHistory")) || [];
 
-//user initials
-var initials = localStorage.getItem("initials");
-//score
-var score = localStorage.getItem("score");
 // timer initial value
-var timer = 75;
+var timer = 60;
 //index for questions
 var index = 0;
 //array of objects containing questions and correct answer
@@ -93,7 +89,29 @@ var myQuestions = [
     correctAnswer: "ESLint",
   },
 ];
+// get the good answer for checking puposes
 var goodA;
+
+//function to check answer
+function checkA(a) {
+  //if answer is correct show the prompt
+  if (a == goodA) {
+    correct.play();
+    answerEl.style.display = "block";
+    answerEl.textContent = "Correct!";
+    //fadeout answer promt
+    setTimeout(fade_out, 1000);
+    //if answer is wrong show prompt and take 10 sec off the timer
+  } else {
+    wrong.play();
+    answerEl.style.display = "block";
+    answerEl.textContent = "wrong!";
+    timer = timer - 10;
+    //fadeout answer promt
+    setTimeout(fade_out, 1000);
+  }
+}
+
 //function to show each question after answer
 function showQ() {
   if (index > 5) {
@@ -124,33 +142,11 @@ function showQ() {
     quiz.style.display = "block";
   }
 }
-//function to make the quiz
-function createQuiz(event) {
-  event.stopPropagation();
-  event.preventDefault();
-  showQ();
-  setTime();
-}
-
-//function to check answer
-function checkA(a) {
-  //if answer is correct show the prompt
-  if (a == goodA) {
-    correct.play();
-    answerEl.style.display = "block";
-    answerEl.textContent = "Correct!";
-    //fadeout answer promt
-    setTimeout(fade_out, 1000);
-    //if answer is wrong show prompt and take 10 sec off the timer
-  } else {
-    wrong.play();
-    answerEl.style.display = "block";
-    answerEl.textContent = "wrong!";
-    timer = timer - 10;
-    //fadeout answer promt
-    setTimeout(fade_out, 1000);
-  }
-}
+//function to fadeoout answer element
+var fade_out = function () {
+  var a = $("#answer");
+  a.fadeOut().empty();
+};
 //function to get user initials and display final score
 function finalScoreF() {
   answerEl.style.display = "none";
@@ -173,7 +169,13 @@ function setTime() {
     }
   }, 1000);
 }
-
+//function to make the quiz
+function createQuiz(event) {
+  event.stopPropagation();
+  event.preventDefault();
+  showQ();
+  setTime();
+}
 start.addEventListener("click", createQuiz);
 ul.addEventListener("click", function (event) {
   event.preventDefault();
@@ -199,11 +201,24 @@ ul.addEventListener("click", function (event) {
     }
   }
 });
-//function to fadeoout answer element
-var fade_out = function () {
-  var a = $("#answer");
-  a.fadeOut().empty();
-};
+//store the results in the local storage
+function allResults(i, s) {
+  var results = { lastI: i, lastS: s };
+  allHighscores.push(results);
+  localStorage.setItem("scoreHistory", JSON.stringify(allHighscores));
+}
+
+//function to retry game
+function retry() {
+  e.preventDefault();
+  timeEl.textContent = "Time: " + 0;
+  index = 0;
+  timer = 75;
+  lastDisplay.style.display = "none";
+  head.style.display = "block";
+  quizIntro.style.display = "block";
+}
+
 //All events handling
 submit.addEventListener("click", function highScore(e) {
   e.preventDefault();
@@ -220,22 +235,6 @@ submit.addEventListener("click", function highScore(e) {
   lastInit.textContent = "1. " + initials + " ";
   lastScore.textContent = score;
 });
-//store the results in the local storage
-function allResults(i, s) {
-  var results = { lastI: i, lastS: s };
-  allHighscores.push(results);
-  localStorage.setItem("scoreHistory", JSON.stringify(allHighscores));
-}
-//function to retry game
-function retry(){
-  e.preventDefault();
-  timeEl.textContent = "Time: " + 0;
-  index = 0;
-  timer = 75;
-  lastDisplay.style.display = "none";
-  head.style.display = "block";
-  quizIntro.style.display = "block";
-}
 retry.addEventListener("click", function retry(e) {
   e.preventDefault();
   timeEl.textContent = "Time: " + 0;
@@ -268,7 +267,7 @@ viewScore.addEventListener("click", function highScore(e) {
   goBack.style.display = "block";
 });
 //function to get back to home page onclick
-goBack.addEventListener("click",function retry(e) {
+goBack.addEventListener("click", function retryF(e) {
   e.preventDefault();
   timeEl.textContent = "Time: " + 0;
   index = 0;
@@ -277,4 +276,4 @@ goBack.addEventListener("click",function retry(e) {
   head.style.display = "block";
   quizIntro.style.display = "block";
   goBack.style.display = "none";
-})
+});
